@@ -1,28 +1,49 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-class App extends Component {
+import "./App.css";
+import { AddTest } from "./config/action/actiondunction";
+
+class Application extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <p>This is my script</p>
+        <button
+          onClick={() => {
+            this.props.isDispatch("Element Connart");
+          }}
+        >
+          Bouton
+        </button>
+
+        {this.props.liste.map((element, index) => {
+          return (
+            <div key={index}>
+              <p>{element}</p>
+            </div>
+          );
+        })}
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { liste: state };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    isDispatch: valeur => {
+      dispatch(AddTest(valeur));
+    }
+  };
+};
+
+const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Application);
 
 export default App;
